@@ -24,7 +24,7 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="com.groupthree.blocklink.MarketFragment"
+            android:name="com.groupthree.blocklink.Market.MarketFragment"
             android:layout_width="match_parent"
             android:layout_height="647dp"
             tools:layout="@layout/market_fragment" />
