@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">blocklink</string>
+    <string name="app_name">BlockLink</string>
+    <string name="chat">Chat</string>
+    <string name="market">Market</string>
+    <string name="events">Events</string>
+
 </resources>
