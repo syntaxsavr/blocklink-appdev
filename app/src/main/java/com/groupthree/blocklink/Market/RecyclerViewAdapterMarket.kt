@@ -3,12 +3,13 @@ package com.groupthree.blocklink.Market
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.groupthree.blocklink.R
 
 
-class RecyclerViewAdapterMarket(private val dataSet: Array<String>) :
+class RecyclerViewAdapterMarket(private val dataSet: Array<MarketItem>) :
     RecyclerView.Adapter<RecyclerViewAdapterMarket.ViewHolder>() {
 
     /**
@@ -17,31 +18,42 @@ class RecyclerViewAdapterMarket(private val dataSet: Array<String>) :
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        var image:ImageView
+        var name:TextView
+        var description: TextView
+        var price: TextView
+
 
         init {
-            // Define click listener for the ViewHolder's View
-
+            image = view.findViewById(R.id.itemImage)
+            name = view.findViewById(R.id.itemName)
+            description = view.findViewById(R.id.itemDescription)
+            price = view.findViewById(R.id.itemPrice)
         }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.market_item, viewGroup, false)
 
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        //viewHolder.textView.text = dataSet[position]
+        viewHolder.name.text = dataSet[position].getItemName()
+        viewHolder.description.text = dataSet[position].getItemDescription()
+        var price = dataSet[position].getItemPrice()
+
+        if(price%1 == 1.00 || price%1 ==0.00){
+            var priceInt = price.toInt()
+            viewHolder.price.text = "€ $priceInt.-"
+        }
+        else{
+            viewHolder.price.text = "€ $price"
+        }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
 }
