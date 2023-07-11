@@ -1,10 +1,15 @@
 package com.groupthree.blocklink.Market
 
-import android.view.View
-
-class MarketItem(var name:String, var description:String, var price:Double) {
+class MarketItem(var id:Int, var name:String, var description:String, var price:Double) {
 
 
+    fun getItemID(): Int {
+        return id
+    }
+
+    fun setItemName(id: Int){
+        this.id = id
+    }
     fun getItemName(): String {
         return name
     }

@@ -5,17 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import com.groupthree.blocklink.R
+
 
 class MarketFragment : Fragment(R.layout.market_fragment) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerViewAdapterMarket
     private lateinit var items: Array<MarketItem>
+    private lateinit var database: DatabaseReference
 
 
     @SuppressLint("MissingInflatedId")
@@ -28,7 +33,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
 
 
         items = arrayOf(
-            MarketItem("Vans", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", 99.99),
+            /*MarketItem("Vans", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", 99.99),
             MarketItem("Converse", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", 80.00),
             MarketItem("Flasche", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua", 75.00),
             MarketItem("Yoga-Matte", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", 300.99),
@@ -36,8 +41,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             MarketItem("Schreibtisch", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", 120.00),
             MarketItem("Crack", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", 40.00),
             MarketItem("Wurst", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt", 57.90),
-            MarketItem("Michael", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", 879.99),
-            MarketItem("Frauen und Waffen", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", 100.00),
+            MarketItem("Michael", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.", 879.99),*/
             )
 
         adapter = RecyclerViewAdapterMarket(items)
@@ -45,5 +49,12 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
 
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        database = Firebase.database.reference
+
     }
 }
