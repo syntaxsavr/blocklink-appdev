@@ -15,6 +15,8 @@ import com.groupthree.blocklink.R
 class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
     RecyclerView.Adapter<RecyclerViewAdapterMarket.ViewHolder>() {
 
+    var count:Int = 0
+
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
@@ -39,6 +41,8 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.market_item, viewGroup, false)
 
+
+
         return ViewHolder(view)
     }
 
@@ -47,6 +51,8 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                count = dataSnapshot.childrenCount.toInt()
 
                 viewHolder.name.text =
                     dataSnapshot.child("i${viewHolder.adapterPosition}")
@@ -74,8 +80,29 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
             }
         })
 
+        databaseReference.addChildEventListener(object:ChildEventListener{
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
     }
 
-    override fun getItemCount() = 10
+    override fun getItemCount()= 10
 
 }

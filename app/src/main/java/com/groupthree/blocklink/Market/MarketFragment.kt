@@ -1,15 +1,16 @@
 package com.groupthree.blocklink.Market
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.groupthree.blocklink.R
 
 
@@ -19,6 +20,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private lateinit var adapter: RecyclerViewAdapterMarket
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
+
 
 
 
@@ -47,7 +49,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     }
 
     private fun addItem() {
-        var item = MarketItem("Vans", "Farbe: schwarz\nZustand: neuwertig\nGröße: 38", 60.00)
+        /*var item = MarketItem("Vans", "Farbe: schwarz\nZustand: neuwertig\nGröße: 38", 60.00)
         databaseReference.child("items").child("i0").setValue(item)
         item = MarketItem("Jeans", "Farbe: grau\nGröße: 34\nZustand: gebraucht", 69.99)
         databaseReference.child("items").child("i1").setValue(item)
@@ -66,7 +68,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         item = MarketItem("Gießkanne", "Farbe: rot\nGröße: 40cm\nZustand: neuwertig", 5.00)
         databaseReference.child("items").child("i8").setValue(item)
         item = MarketItem("Lampe", "Marke: Ikea\nGröße: 150cm\nZustand: gebraucht", 200.00)
-        databaseReference.child("items").child("i9").setValue(item)
+        databaseReference.child("items").child("i9").setValue(item)*/
 
     }
 
