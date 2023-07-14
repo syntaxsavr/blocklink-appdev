@@ -109,6 +109,7 @@
         android:layout_height="60dp"
         android:background="#FFFFFF"
         android:backgroundTint="?android:attr/colorBackground"
+        android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,13 +118,13 @@
         <Button
             android:id="@+id/add"
             android:layout_width="212dp"
-            android:layout_height="60dp"
+            android:layout_height="63dp"
             android:text="add" />
 
         <Button
             android:id="@+id/cancel"
             android:layout_width="212dp"
-            android:layout_height="60dp"
+            android:layout_height="63dp"
             android:text="cancel" />
     </LinearLayout>
 

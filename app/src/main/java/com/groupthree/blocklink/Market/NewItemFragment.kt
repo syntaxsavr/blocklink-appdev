@@ -32,36 +32,48 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
 
 
         binding.add.setOnClickListener() {
-            if(binding.name.text == null || binding.description.text == null || binding.price.text == null){
+            if(binding.nameText.text.isNullOrBlank() || binding.descriptionText.text.isNullOrBlank()|| binding.priceText.text.isNullOrBlank()){
                 val toast = Toast.makeText(requireContext(), "Please enter Name, Description and Price.", Toast.LENGTH_LONG)
                 toast.show()
+
             }
             else{
                 var count = 0
-                var bool = true
-                while(bool) {
                     databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            if (dataSnapshot.child("i$count").exists()) {
-                                count++
-                            } else {
-                                bool = false
-                            }
+                          count = dataSnapshot.childrenCount.toInt()
                         }
 
                         override fun onCancelled(databaseError: DatabaseError) {
                         }
                     })
+
+
+                var priceDouble=0.00
+                var priceString = binding.priceText.text.toString()
+                val regex = "[0-9]*.[0-9]?[0-9]?"
+                if (priceString != "" && !priceString.matches(regex.toRegex())){
+                    val toast = Toast.makeText(requireContext(), "Please enter price in numbers.", Toast.LENGTH_LONG)
+                    toast.show()
+                    }
+                else {
+                    priceDouble = priceString.toDouble()
+
+                    var item = MarketItem(
+                        binding.nameText.text.toString(),
+                        binding.descriptionText.text.toString(),
+                        priceDouble
+                    )
+
+                    databaseReference.child("i$count").setValue(item)
+
+
+                    val marketFragment = MarketFragment()
+                    val fragmentTransaction = requireFragmentManager().beginTransaction()
+                    fragmentTransaction.replace(R.id.frame_layout, marketFragment)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
                 }
-
-            var item = MarketItem(binding.name.text.toString(), binding.description.text.toString(), binding.price.text.toString().toDouble())
-            databaseReference.child("items").child("i$count").setValue(item)
-
-            val marketFragment = MarketFragment()
-            val fragmentTransaction = requireFragmentManager().beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, marketFragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
             }
         }
 
