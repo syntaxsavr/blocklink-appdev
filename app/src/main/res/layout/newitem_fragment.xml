@@ -12,9 +12,9 @@
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
+        android:gravity="top"
         android:text="Description:"
-        android:textColor="#5A595B"
+        android:textColor="#000000"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
@@ -25,9 +25,9 @@
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="100dp"
-        android:gravity="center_vertical"
+        android:gravity="top"
         android:text="Name:"
-        android:textColor="#5A595B"
+        android:textColor="#000000"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,9 +38,10 @@
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="120dp"
-        android:gravity="center_vertical"
+        android:fontFamily="sans-serif"
+        android:gravity="top"
         android:text="Price:"
-        android:textColor="#5A595B"
+        android:textColor="#000000"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description" />
@@ -55,11 +56,12 @@
         android:backgroundTint="#00FFFFFF"
         android:backgroundTintMode="add"
         android:text=" "
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/name_text3"
+        android:id="@+id/price_text"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -82,28 +84,9 @@
         android:backgroundTint="#00FAF9F9"
         android:backgroundTintMode="add"
         android:text="   "
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_text" />
-
-    <Button
-        android:id="@+id/cancel"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="30dp"
-        android:text="cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/add"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="30dp"
-        android:text="add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/addnewitem"
@@ -114,11 +97,34 @@
         android:layout_marginEnd="81dp"
         android:gravity="center"
         android:text="ADD NEW ITEM"
-        android:textColor="#5A595B"
-        android:textSize="28sp"
+        android:textColor="#000000"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="412dp"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="?android:attr/colorBackground"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="212dp"
+            android:layout_height="60dp"
+            android:text="add" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="212dp"
+            android:layout_height="60dp"
+            android:text="cancel" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

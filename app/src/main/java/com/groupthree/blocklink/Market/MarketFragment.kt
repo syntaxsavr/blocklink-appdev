@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.groupthree.blocklink.R
+import com.groupthree.blocklink.databinding.MarketFragmentBinding
+import com.groupthree.blocklink.databinding.NewitemFragmentBinding
 
 
 class MarketFragment : Fragment(R.layout.market_fragment) {
@@ -20,6 +22,8 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private lateinit var adapter: RecyclerViewAdapterMarket
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
+    private var _binding: MarketFragmentBinding? = null
+    private val binding get() = _binding!!
 
 
 
@@ -27,9 +31,10 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val rootView = inflater.inflate(R.layout.market_fragment, container, false)
+        _binding = MarketFragmentBinding.inflate(inflater, container, false)
+        //val rootView = inflater.inflate(R.layout.market_fragment, container, false)
 
-        recyclerView = rootView.findViewById(R.id.recyclerView)
+        recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -40,7 +45,15 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         recyclerView.adapter = adapter
 
 
-        return rootView
+        binding.additem.setOnClickListener{
+            val newitemFragment = NewItemFragment()
+            val fragmentTransaction = requireFragmentManager().beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, newitemFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

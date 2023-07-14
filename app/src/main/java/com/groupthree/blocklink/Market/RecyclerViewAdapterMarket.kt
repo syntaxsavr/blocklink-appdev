@@ -103,6 +103,6 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
 
     }
 
-    override fun getItemCount()= 10
+    override fun getItemCount()=10
 
 }
