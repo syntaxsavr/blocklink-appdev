@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +20,8 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private lateinit var adapter: RecyclerViewAdapterMarket
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var gestureDetector: GestureDetector
+
     private var _binding: MarketFragmentBinding? = null
     private val binding get() = _binding!!
 
@@ -63,6 +63,38 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+
+        gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                val childView = binding.recyclerView.findChildViewUnder(e.x, e.y)
+                val position = childView?.let { binding.recyclerView.getChildAdapterPosition(it) }
+                if (position != RecyclerView.NO_POSITION) {
+
+                val detailsFragment = ItemDetailsFragment()
+                val fragmentTransaction = requireFragmentManager().beginTransaction()
+                fragmentTransaction.replace(R.id.frame_layout, detailsFragment)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
+                }
+                return true
+            }
+        })
+
+        binding.recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                gestureDetector.onTouchEvent(e)
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+            }
+        })
+
+
 
         return binding.root
     }
