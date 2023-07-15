@@ -25,25 +25,36 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private var _binding: MarketFragmentBinding? = null
     private val binding get() = _binding!!
 
-
+    var count: Int = 0
 
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = MarketFragmentBinding.inflate(inflater, container, false)
-        //val rootView = inflater.inflate(R.layout.market_fragment, container, false)
+
 
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReference = database.getReference("items")
-        addItem()
+        addItems()
 
-        adapter = RecyclerViewAdapterMarket(databaseReference)
-        recyclerView.adapter = adapter
 
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                count = dataSnapshot.childrenCount.toInt()
+                adapter = RecyclerViewAdapterMarket(databaseReference,count)
+                recyclerView.adapter = adapter
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+
+        databaseReference.addValueEventListener(valueEventListener)
 
         binding.additem.setOnClickListener{
             val newitemFragment = NewItemFragment()
@@ -61,7 +72,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
 
     }
 
-    private fun addItem() {
+    private fun addItems() {
         /*var item = MarketItem("Vans", "Farbe: schwarz\nZustand: neuwertig\nGröße: 38", 60.00)
         databaseReference.child("i00").setValue(item)
         item = MarketItem("Jeans", "Farbe: grau\nGröße: 34\nZustand: gebraucht", 69.99)

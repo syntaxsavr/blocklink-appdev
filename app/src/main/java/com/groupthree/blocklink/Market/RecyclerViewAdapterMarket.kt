@@ -9,13 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.snapshots
 import com.groupthree.blocklink.R
+import kotlinx.coroutines.flow.count
 
 
-class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
+class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var count:Int) :
     RecyclerView.Adapter<RecyclerViewAdapterMarket.ViewHolder>() {
-
-    var count:Int = 0
 
     /**
      * Provide a reference to the type of views that you are using
@@ -41,8 +41,6 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.market_item, viewGroup, false)
 
-
-
         return ViewHolder(view)
     }
 
@@ -51,8 +49,6 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                count = dataSnapshot.childrenCount.toInt()
 
                 var priceString=""
 
@@ -97,6 +93,6 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
 
     }
 
-    override fun getItemCount()=10
+    override fun getItemCount() = count
 
 }
