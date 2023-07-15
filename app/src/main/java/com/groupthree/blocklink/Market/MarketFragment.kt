@@ -64,13 +64,13 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             fragmentTransaction.commit()
         }
 
+
         gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 val childView = binding.recyclerView.findChildViewUnder(e.x, e.y)
                 val position = childView?.let { binding.recyclerView.getChildAdapterPosition(it) }
                 if (position != RecyclerView.NO_POSITION) {
-
-                val detailsFragment = ItemDetailsFragment()
+                val detailsFragment = ItemDetailsFragment(position)
                 val fragmentTransaction = requireFragmentManager().beginTransaction()
                 fragmentTransaction.replace(R.id.frame_layout, detailsFragment)
                 fragmentTransaction.addToBackStack(null)

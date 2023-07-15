@@ -1,6 +1,8 @@
 package com.groupthree.blocklink.Market
 
 import android.content.ContentValues.TAG
+import android.graphics.drawable.Drawable
+import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +58,7 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
                     viewHolder.name.text =
                         dataSnapshot.child("i0${viewHolder.adapterPosition}")
                             .child("name").getValue().toString()
+
 
                     viewHolder.description.text =
                         dataSnapshot.child("i0${viewHolder.adapterPosition}")
