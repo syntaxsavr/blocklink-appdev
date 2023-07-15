@@ -38,22 +38,10 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
 
             }
             else{
-                var count = 0
-                    databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                          count = dataSnapshot.childrenCount.toInt()
-                        }
-
-                        override fun onCancelled(databaseError: DatabaseError) {
-                        }
-                    })
-
-
-                var priceDouble=0.00
-                var priceString = binding.priceText.text.toString()
-                val regex = "[0-9]*.[0-9]?[0-9]?"
-                if (priceString != "" && !priceString.matches(regex.toRegex())){
-                    val toast = Toast.makeText(requireContext(), "Please enter price in numbers.", Toast.LENGTH_LONG)
+                var priceDouble = 0.00
+                val priceString = binding.priceText.text.toString()
+                if (!isDoubleFormat(priceString)){
+                    val toast = Toast.makeText(requireContext(), "Please enter price in following format: \"xxx.xx\".", Toast.LENGTH_LONG)
                     toast.show()
                     }
                 else {
@@ -65,7 +53,18 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
                         priceDouble
                     )
 
-                    databaseReference.child("i$count").setValue(item)
+                    var count = 0
+                    databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            count = dataSnapshot.childrenCount.toInt()
+                            databaseReference.child("i$count").setValue(item)
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            Log.i("Firebase", "addListenerForSingleValueEvent: cancelled")
+                        }
+                    })
+
 
 
                     val marketFragment = MarketFragment()
@@ -85,12 +84,16 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
             fragmentTransaction.commit()
         }
 
-
-
-
-
-
         return binding.root
+    }
+
+    fun isDoubleFormat(str: String): Boolean {
+        return try {
+            str.toDouble()
+            true
+        } catch (e: NumberFormatException) {
+            false
+        }
     }
 
 }

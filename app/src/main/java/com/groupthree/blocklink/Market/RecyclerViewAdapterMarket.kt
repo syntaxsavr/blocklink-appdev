@@ -54,50 +54,44 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference) :
 
                 count = dataSnapshot.childrenCount.toInt()
 
-                viewHolder.name.text =
-                    dataSnapshot.child("i${viewHolder.adapterPosition}")
-                        .child("name").getValue().toString()
+                var priceString=""
 
-                viewHolder.description.text =
-                    dataSnapshot.child("i${viewHolder.adapterPosition}")
-                        .child("description").getValue().toString()
+                if (viewHolder.adapterPosition < 10) {
+                    viewHolder.name.text =
+                        dataSnapshot.child("i0${viewHolder.adapterPosition}")
+                            .child("name").getValue().toString()
 
-                var price = dataSnapshot.child("i${viewHolder.adapterPosition}")
-                    .child("price").getValue().toString().toDouble()
+                    viewHolder.description.text =
+                        dataSnapshot.child("i0${viewHolder.adapterPosition}")
+                            .child("description").getValue().toString()
 
 
-                if(price%1 == 1.00 || price%1 ==0.00){
-                    var priceInt = price.toInt()
-                    viewHolder.price.text = "€ $priceInt.-"
+                    priceString = dataSnapshot.child("i0${viewHolder.adapterPosition}")
+                        .child("price").getValue().toString()
+
                 }
                 else{
-                    viewHolder.price.text = "€ $price"
+                    viewHolder.name.text =
+                        dataSnapshot.child("i${viewHolder.adapterPosition}")
+                            .child("name").getValue().toString()
+
+                    viewHolder.description.text =
+                        dataSnapshot.child("i${viewHolder.adapterPosition}")
+                            .child("description").getValue().toString()
+
+
+                    priceString = dataSnapshot.child("i${viewHolder.adapterPosition}")
+                        .child("price").getValue().toString()
+                }
+
+                val regex1 = "^[0-9]*.([0-9][0-9]?)?"
+                if(priceString.matches(regex1.toRegex())){
+                    viewHolder.price.text = "€ $priceString"
                 }
 
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-
-        databaseReference.addChildEventListener(object:ChildEventListener{
-            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
-
-            }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
 
