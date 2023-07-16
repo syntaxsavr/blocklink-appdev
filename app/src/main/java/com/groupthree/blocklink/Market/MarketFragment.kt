@@ -105,25 +105,60 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     }
 
     private fun addItems() {
-        /*var item = MarketItem("Vans", "Farbe: schwarz\nZustand: neuwertig\nGröße: 38", 60.00)
+        /*var item = MarketItem(
+            "Vans", "Farbe: schwarz\nGröße: 38\n" +
+                    "Zustand: neuwertig\nMaterial: Leder/Textil", 60.00
+        )
         databaseReference.child("i00").setValue(item)
-        item = MarketItem("Jeans", "Farbe: grau\nGröße: 34\nZustand: gebraucht", 69.99)
+        item = MarketItem(
+            "Jeans",
+            "Marke: Levis \nFarbe: grau\nGröße: 34\nSchnitt: Super Skinny / High Waist\nZustand: gebraucht",
+            69.99
+        )
         databaseReference.child("i01").setValue(item)
-        item = MarketItem("iPhone X", "Farbe: schwarz\n128GB\nZustand: gebraucht", 650.00)
+        item = MarketItem("iPhone X", "Farbe: schwarz\nSpeicher: 128GB\nZustand: gebraucht", 650.00)
         databaseReference.child("i02").setValue(item)
-        item = MarketItem("Pullover", "Marke: Adidas\nFarbe: blau\nGröße: 36\nZustand: neuwertig", 49.90)
+        item = MarketItem(
+            "Pullover",
+            "Marke: Adidas\nFarbe: blau\nGröße: 36\nMaterial: Baumwolle\nZustand: neuwertig",
+            49.90
+        )
         databaseReference.child("i03").setValue(item)
-        item = MarketItem("Couch", "Farbe: weiß\nMaterial: Textil\nMaße: 200x300x100cm\nZustand: neuwertig", 449.99)
+        item = MarketItem(
+            "Couch",
+            "Farbe: weiß/beige\nMaterial: Textil\nMaße: 200x300x100cm\nZustand: neuwertig",
+            449.99
+        )
         databaseReference.child("i04").setValue(item)
-        item = MarketItem("Fernseher", "Marke: Samsung\nGröße: 55 Zoll\nZustand: gebraucht", 200.99)
+        item = MarketItem(
+            "Fernseher",
+            "Marke: Samsung\nModell: Neo QLED 8K QN700C (2023)\nGröße: 65 Zoll\nZustand: gebraucht",
+            200.99
+        )
         databaseReference.child("i05").setValue(item)
-        item = MarketItem("T-Shirt", "Marke: Puma\nGröße: 40\nZustand: neuwertig", 10.50)
+        item = MarketItem(
+            "Croptop",
+            "Marke: Puma\nMaterial: Polyester/Viskose\nGröße: 40\nZustand: neuwertig",
+            10.50
+        )
         databaseReference.child("i06").setValue(item)
-        item = MarketItem("Dell Inspiron 14", "Größe: 14 Zoll\nProzessor: 11th Gen Intel(R) Core(TM) i7-11390H\nRAM: 16GB\nZustand: gebraucht", 500.99)
+        item = MarketItem(
+            "Dell Inspiron 14",
+            "Display: 14 Zoll\nProzessor: 11th Gen Intel(R) Core(TM) i7-11390H @ 3.40GHz 2.92 GHz\nRAM: 16GB\nSSD: 1TB\nBetriebssystem: Windows 11 Pro\nZustand: gebraucht",
+            500.99
+        )
         databaseReference.child("i07").setValue(item)
-        item = MarketItem("Gießkanne", "Farbe: rot\nGröße: 40cm\nZustand: neuwertig", 5.00)
+        item = MarketItem(
+            "Gießkanne",
+            "Farbe: rot\nGröße: 40cm\nMaterial: Plastik\nZustand: neuwertig",
+            5.00
+        )
         databaseReference.child("i08").setValue(item)
-        item = MarketItem("Lampe", "Marke: Ikea\nGröße: 150cm\nZustand: gebraucht", 200.00)
+        item = MarketItem(
+            "Lampe",
+            "Marke: Ikea\nGröße: 150cm\nLampenschirm: Papier\nZustand: gebraucht",
+            200.00
+        )
         databaseReference.child("i09").setValue(item)*/
 
     }
