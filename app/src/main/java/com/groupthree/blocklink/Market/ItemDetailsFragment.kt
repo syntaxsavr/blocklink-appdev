@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.groupthree.blocklink.R
 import com.groupthree.blocklink.databinding.ItemdetailsFragmentBinding
 import com.groupthree.blocklink.databinding.MarketFragmentBinding
@@ -25,6 +28,8 @@ class ItemDetailsFragment(var position:Int?) : Fragment(R.layout.itemdetails_fra
 
         database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReference = database.getReference("items")
+        val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
+        val storageReference = storage.reference
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -62,6 +67,19 @@ class ItemDetailsFragment(var position:Int?) : Fragment(R.layout.itemdetails_fra
             }
         })
 
+        var pathString = ""
+        if(position!! < 10){
+            pathString = "i0$position.png"
+        }
+        else{
+            pathString = "i$position.png"
+        }
+
+        context?.let {
+            Glide.with(it)
+                .load(storageReference.child(pathString))
+                .into(binding.itemimageDetails)
+        }
 
         binding.backDetails.setOnClickListener{
             val marketFragment = MarketFragment()

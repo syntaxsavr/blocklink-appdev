@@ -105,7 +105,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     }
 
     private fun addItems() {
-        /*var item = MarketItem(
+        var item = MarketItem(
             "Vans", "Farbe: schwarz\nGröße: 38\n" +
                     "Zustand: neuwertig\nMaterial: Leder/Textil", 60.00
         )
@@ -133,12 +133,12 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         item = MarketItem(
             "Fernseher",
             "Marke: Samsung\nModell: Neo QLED 8K QN700C (2023)\nGröße: 65 Zoll\nZustand: gebraucht",
-            200.99
+            700.99
         )
         databaseReference.child("i05").setValue(item)
         item = MarketItem(
-            "Croptop",
-            "Marke: Puma\nMaterial: Polyester/Viskose\nGröße: 40\nZustand: neuwertig",
+            "Top",
+            "Marke: Puma\nFarbe: blau\nMaterial: Polyester/Viskose\nGröße: 40\nZustand: neuwertig",
             10.50
         )
         databaseReference.child("i06").setValue(item)
@@ -155,11 +155,11 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         )
         databaseReference.child("i08").setValue(item)
         item = MarketItem(
-            "Lampe",
-            "Marke: Ikea\nGröße: 150cm\nLampenschirm: Papier\nZustand: gebraucht",
+            "Stehlampe",
+            "Marke: Ikea\nGröße: 150cm\nFarbe: Gold/Schwarz\nLampenschirm: Metall\nZustand: gebraucht",
             200.00
         )
-        databaseReference.child("i09").setValue(item)*/
+        databaseReference.child("i09").setValue(item)
 
     }
 

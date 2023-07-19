@@ -1,6 +1,7 @@
 package com.groupthree.blocklink.Market
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.media.Image
 import android.util.Log
@@ -12,12 +13,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.snapshots
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.groupthree.blocklink.R
 import kotlinx.coroutines.flow.count
+import com.bumptech.glide.Glide
 
 
 class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var count:Int) :
     RecyclerView.Adapter<RecyclerViewAdapterMarket.ViewHolder>() {
+
+    private lateinit var context: Context
 
     /**
      * Provide a reference to the type of views that you are using
@@ -43,10 +50,16 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.market_item, viewGroup, false)
 
+        context = viewGroup.context
+
+
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+
+        val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
+        val storageReference = storage.reference
 
 
         databaseReference.addValueEventListener(object : ValueEventListener {
@@ -67,6 +80,7 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
 
                     priceString = dataSnapshot.child("i0${viewHolder.adapterPosition}")
                         .child("price").getValue().toString()
+
 
                 }
                 else{
@@ -94,6 +108,17 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
             }
         })
 
+        var pathString = ""
+        if(viewHolder.absoluteAdapterPosition < 10){
+            pathString = "i0${viewHolder.adapterPosition}.png"
+        }
+        else{
+            pathString = "i${viewHolder.adapterPosition}.png"
+        }
+
+        Glide.with(context)
+            .load(storageReference.child(pathString))
+            .into(viewHolder.image)
     }
 
     override fun getItemCount() = count
