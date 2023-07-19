@@ -1,7 +1,13 @@
 package com.groupthree.blocklink.Market
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +16,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.groupthree.blocklink.R
 import com.groupthree.blocklink.databinding.NewitemFragmentBinding
+import java.util.*
 
 class NewItemFragment: Fragment(R.layout.newitem_fragment) {
 
@@ -19,7 +28,10 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
     private lateinit var databaseReference: DatabaseReference
     private var _binding: NewitemFragmentBinding? = null
     private val binding get() = _binding!!
-
+    private val PICK_IMAGE_REQUEST = 1
+    private val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
+    private val storageReference = storage.reference
+    private var selectedImageUri:Uri? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -58,6 +70,11 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             count = dataSnapshot.childrenCount.toInt()
                             databaseReference.child("i$count").setValue(item)
+                            selectedImageUri?.let { it1 ->
+                                storageReference.child("i$count.png").putFile(
+                                    it1
+                                )
+                            }
                         }
 
                         override fun onCancelled(databaseError: DatabaseError) {
@@ -84,10 +101,22 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
             fragmentTransaction.commit()
         }
 
+        binding.uploadImage.setOnClickListener{
+            openGallery()
+        }
         return binding.root
     }
 
-    fun isDoubleFormat(str: String): Boolean {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+           selectedImageUri = data.data
+            binding.imagePreview.setImageURI(selectedImageUri)
+        }
+    }
+
+    private fun isDoubleFormat(str: String): Boolean {
         return try {
             str.toDouble()
             true
@@ -95,5 +124,12 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
             false
         }
     }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+
 
 }
