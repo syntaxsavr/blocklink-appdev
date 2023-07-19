@@ -90,6 +90,23 @@ class ItemDetailsFragment(var position:Int?) : Fragment(R.layout.itemdetails_fra
         }
 
 
+        binding.contactDetails.setOnClickListener{
+            databaseReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var seller = dataSnapshot.child("i$position")
+                        .child("seller").getValue().toString()
+
+                    //TODO open new chat with seller
+
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+                }
+
+            })
+        }
+
+
         return binding.root
     }
 }

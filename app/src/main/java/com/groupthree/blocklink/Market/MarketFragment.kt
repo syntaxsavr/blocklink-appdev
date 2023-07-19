@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.groupthree.blocklink.R
+import com.groupthree.blocklink.User
 import com.groupthree.blocklink.databinding.MarketFragmentBinding
-import com.groupthree.blocklink.databinding.NewitemFragmentBinding
 
 
 class MarketFragment : Fragment(R.layout.market_fragment) {
@@ -19,7 +19,8 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecyclerViewAdapterMarket
     private lateinit var database: FirebaseDatabase
-    private lateinit var databaseReference: DatabaseReference
+    private lateinit var databaseReferenceItems: DatabaseReference
+    private lateinit var databaseReferenceUsers: DatabaseReference
     private lateinit var gestureDetector: GestureDetector
 
     private var _binding: MarketFragmentBinding? = null
@@ -38,14 +39,15 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
-        databaseReference = database.getReference("items")
+        databaseReferenceItems = database.getReference("items")
+        databaseReferenceUsers = database.getReference("users")
         addItems()
 
 
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 count = dataSnapshot.childrenCount.toInt()
-                adapter = RecyclerViewAdapterMarket(databaseReference,count)
+                adapter = RecyclerViewAdapterMarket(databaseReferenceItems,count)
                 recyclerView.adapter = adapter
             }
 
@@ -54,7 +56,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             }
         }
 
-        databaseReference.addValueEventListener(valueEventListener)
+        databaseReferenceItems.addValueEventListener(valueEventListener)
 
         binding.additem.setOnClickListener{
             val newitemFragment = NewItemFragment()
@@ -107,60 +109,70 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private fun addItems() {
         var item = MarketItem(
             "Vans", "Farbe: schwarz\nGröße: 38\n" +
-                    "Zustand: neuwertig\nMaterial: Leder/Textil", 60.00
+                    "Zustand: neuwertig\nMaterial: Leder/Textil", 60.00, "cathrinsc"
         )
-        databaseReference.child("i00").setValue(item)
+        databaseReferenceItems.child("i00").setValue(item)
         item = MarketItem(
             "Jeans",
             "Marke: Levis \nFarbe: grau\nGröße: 34\nSchnitt: Super Skinny / High Waist\nZustand: gebraucht",
-            69.99
+            69.99,
+            "cathrinsc"
         )
-        databaseReference.child("i01").setValue(item)
-        item = MarketItem("iPhone X", "Farbe: schwarz\nSpeicher: 128GB\nZustand: gebraucht", 650.00)
-        databaseReference.child("i02").setValue(item)
+        databaseReferenceItems.child("i01").setValue(item)
+        item = MarketItem("iPhone X", "Farbe: schwarz\nSpeicher: 128GB\nZustand: gebraucht", 650.00,"cathrinsc")
+        databaseReferenceItems.child("i02").setValue(item)
         item = MarketItem(
             "Pullover",
             "Marke: Adidas\nFarbe: blau\nGröße: 36\nMaterial: Baumwolle\nZustand: neuwertig",
-            49.90
+            49.90,
+            "cathrinsc"
         )
-        databaseReference.child("i03").setValue(item)
+        databaseReferenceItems.child("i03").setValue(item)
         item = MarketItem(
             "Couch",
             "Farbe: weiß/beige\nMaterial: Textil\nMaße: 200x300x100cm\nZustand: neuwertig",
-            449.99
+            449.99,
+            "cathrinsc"
         )
-        databaseReference.child("i04").setValue(item)
+        databaseReferenceItems.child("i04").setValue(item)
         item = MarketItem(
             "Fernseher",
             "Marke: Samsung\nModell: Neo QLED 8K QN700C (2023)\nGröße: 65 Zoll\nZustand: gebraucht",
-            700.99
+            700.99,
+            "cathrinsc"
         )
-        databaseReference.child("i05").setValue(item)
+        databaseReferenceItems.child("i05").setValue(item)
         item = MarketItem(
             "Top",
             "Marke: Puma\nFarbe: blau\nMaterial: Polyester/Viskose\nGröße: 40\nZustand: neuwertig",
-            10.50
+            10.50,
+            "cathrinsc"
         )
-        databaseReference.child("i06").setValue(item)
+        databaseReferenceItems.child("i06").setValue(item)
         item = MarketItem(
             "Dell Inspiron 14",
             "Display: 14 Zoll\nProzessor: 11th Gen Intel(R) Core(TM) i7-11390H @ 3.40GHz 2.92 GHz\nRAM: 16GB\nSSD: 1TB\nBetriebssystem: Windows 11 Pro\nZustand: gebraucht",
-            500.99
+            500.99,
+            "cathrinsc"
         )
-        databaseReference.child("i07").setValue(item)
+        databaseReferenceItems.child("i07").setValue(item)
         item = MarketItem(
             "Gießkanne",
             "Farbe: rot\nGröße: 40cm\nMaterial: Plastik\nZustand: neuwertig",
-            5.00
+            5.00,
+            "cathrinsc"
         )
-        databaseReference.child("i08").setValue(item)
+        databaseReferenceItems.child("i08").setValue(item)
         item = MarketItem(
             "Stehlampe",
             "Marke: Ikea\nGröße: 150cm\nFarbe: Gold/Schwarz\nLampenschirm: Metall\nZustand: gebraucht",
-            200.00
+            200.00,
+            "cathrinsc"
         )
-        databaseReference.child("i09").setValue(item)
+        databaseReferenceItems.child("i09").setValue(item)
 
+        var user = User("cathrinsc")
+        databaseReferenceUsers.child("u01").setValue(user)
     }
 
 }
