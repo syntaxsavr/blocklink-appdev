@@ -73,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/contact_details"
+            android:id="@+id/contactseller_details"
             android:layout_width="212dp"
             android:layout_height="63dp"
             android:text="contact seller" />
@@ -84,5 +84,17 @@
             android:layout_height="63dp"
             android:text="back" />
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:clickable="true"
+        app:backgroundTint="#AFAFAF"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

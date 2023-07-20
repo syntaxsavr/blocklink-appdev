@@ -59,10 +59,12 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
                 else {
                     priceDouble = priceString.toDouble()
 
+                    //TODO: set seller to current user
                     var item = MarketItem(
                         binding.nameText.text.toString(),
                         binding.descriptionText.text.toString(),
-                        priceDouble
+                        priceDouble,
+                        ""
                     )
 
                     var count = 0

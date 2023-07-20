@@ -28,7 +28,6 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
 
     var count: Int = 0
 
-
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -62,6 +61,14 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             val newitemFragment = NewItemFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, newitemFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        binding.saved.setOnClickListener{
+            val savedFragment = SavedFragment()
+            val fragmentTransaction = requireFragmentManager().beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, savedFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
@@ -101,10 +108,6 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
 
     private fun addItems() {
         var item = MarketItem(
@@ -171,8 +174,6 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         )
         databaseReferenceItems.child("i09").setValue(item)
 
-        var user = User("cathrinsc")
-        databaseReferenceUsers.child("u01").setValue(user)
     }
 
 }
