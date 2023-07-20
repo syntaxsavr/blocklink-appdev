@@ -1,6 +1,4 @@
-package com.groupthree.blocklink.Market
-
-
+package com.groupthree.blocklink.Market.Logic
 
 import android.content.Context
 import com.bumptech.glide.Glide
@@ -13,7 +11,7 @@ import java.io.InputStream
 
 
 @GlideModule
-class MyAppGlideModule : AppGlideModule() {
+class GlideModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         registry.append(
             StorageReference::class.java, InputStream::class.java,

@@ -1,9 +1,7 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.Logic
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

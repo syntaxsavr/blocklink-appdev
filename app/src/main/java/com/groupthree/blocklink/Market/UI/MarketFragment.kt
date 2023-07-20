@@ -1,4 +1,4 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.UI
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.groupthree.blocklink.Market.Logic.RecyclerViewAdapterMarket
 import com.groupthree.blocklink.R
-import com.groupthree.blocklink.User
 import com.groupthree.blocklink.databinding.MarketFragmentBinding
 
 
@@ -20,7 +20,6 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     private lateinit var adapter: RecyclerViewAdapterMarket
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReferenceItems: DatabaseReference
-    private lateinit var databaseReferenceUsers: DatabaseReference
     private lateinit var gestureDetector: GestureDetector
 
     private var _binding: MarketFragmentBinding? = null
@@ -39,7 +38,6 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
 
         database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReferenceItems = database.getReference("items")
-        databaseReferenceUsers = database.getReference("users")
         addItems()
 
 

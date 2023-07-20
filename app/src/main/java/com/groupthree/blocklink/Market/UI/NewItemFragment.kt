@@ -1,10 +1,8 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.UI
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
@@ -59,7 +56,7 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
                 else {
                     priceDouble = priceString.toDouble()
 
-                    //TODO: set seller to current user
+                    //TODO: replace empty string with current user
                     var item = MarketItem(
                         binding.nameText.text.toString(),
                         binding.descriptionText.text.toString(),

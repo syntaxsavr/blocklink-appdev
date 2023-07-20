@@ -1,4 +1,4 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.Logic
 
 import android.content.ContentValues
 import android.content.Context
@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.groupthree.blocklink.MainActivity
 import com.groupthree.blocklink.R
 
 class RecyclerViewAdapterSaved(var count:Int) :

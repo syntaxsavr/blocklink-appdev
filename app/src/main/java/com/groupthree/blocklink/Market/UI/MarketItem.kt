@@ -1,4 +1,4 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.UI
 
 data class MarketItem(
     var name:String?= "",

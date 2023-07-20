@@ -1,4 +1,4 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.UI
 
 import android.content.ContentValues
 import android.os.Bundle
@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.groupthree.blocklink.MainActivity
+import com.groupthree.blocklink.Market.Logic.RecyclerViewAdapterSaved
 import com.groupthree.blocklink.R
-import com.groupthree.blocklink.databinding.MarketFragmentBinding
 import com.groupthree.blocklink.databinding.SavedFragmentBinding
 
 class SavedFragment: Fragment(R.layout.saved_fragment) {
@@ -19,7 +18,6 @@ class SavedFragment: Fragment(R.layout.saved_fragment) {
     private lateinit var databaseReferenceItems: DatabaseReference
     private lateinit var databaseReferenceUsers: DatabaseReference
     private lateinit var adapterSaved: RecyclerViewAdapterSaved
-    private lateinit var gestureDetector: GestureDetector
 
     private var _binding: SavedFragmentBinding? = null
     private val binding get() = _binding!!

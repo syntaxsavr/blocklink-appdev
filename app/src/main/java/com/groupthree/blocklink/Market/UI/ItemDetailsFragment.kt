@@ -1,4 +1,4 @@
-package com.groupthree.blocklink.Market
+package com.groupthree.blocklink.Market.UI
 
 import android.content.ContentValues
 import android.os.Bundle
@@ -30,7 +30,7 @@ class ItemDetailsFragment(var position:Int?) : Fragment(R.layout.itemdetails_fra
         database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReferenceItems = database.getReference("items")
 
-        //TODO: replace username with actual current username
+        //TODO: replace username with actual current user
         databaseReferenceUsers = database.getReference("users").child("cathrinsc")
 
         val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
@@ -101,7 +101,7 @@ class ItemDetailsFragment(var position:Int?) : Fragment(R.layout.itemdetails_fra
                     var seller = dataSnapshot.child("i$position")
                         .child("seller").getValue().toString()
 
-                    //TODO open new chat with seller
+                    //TODO: open new chat with seller
 
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -131,8 +131,6 @@ class ItemDetailsFragment(var position:Int?) : Fragment(R.layout.itemdetails_fra
                 }
 
             })
-
-
 
             val toast = Toast.makeText(requireContext(), "Saved item to list.", Toast.LENGTH_LONG)
             toast.show()
