@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.groupthree.blocklink.R
 
-class RecyclerViewAdapterSaved(var count:Int) :
+class RecyclerViewAdapterSaved(var count: Int) :
     RecyclerView.Adapter<RecyclerViewAdapterSaved.ViewHolder>() {
 
     private lateinit var context: Context
@@ -47,7 +47,8 @@ class RecyclerViewAdapterSaved(var count:Int) :
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.market_item, viewGroup, false)
 
-        database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
+        database =
+            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReferenceItems = database.getReference("items")
         databaseReferenceUsers = database.getReference("users")
 
@@ -60,7 +61,7 @@ class RecyclerViewAdapterSaved(var count:Int) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
+        val storage = Firebase.storage("gs://group3-appdev-2023.appspot.com")
         val storageReference = storage.reference
 
         var itemPosition = position.toString()
@@ -69,14 +70,17 @@ class RecyclerViewAdapterSaved(var count:Int) :
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 //TODO: replace with actual current user
-                var itemId = dataSnapshot.child("cathrinsc").child("savedItems").child(itemPosition).getValue().toString()
+                var itemId = dataSnapshot.child("cathrinsc").child("savedItems").child(itemPosition)
+                    .getValue().toString()
 
                 databaseReferenceItems.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                         println(itemId)
-                        holder.name.text = dataSnapshot.child(itemId).child("name").getValue().toString()
-                        holder.description.text = dataSnapshot.child(itemId).child("description").getValue().toString()
+                        holder.name.text =
+                            dataSnapshot.child(itemId).child("name").getValue().toString()
+                        holder.description.text =
+                            dataSnapshot.child(itemId).child("description").getValue().toString()
                         var price = dataSnapshot.child(itemId).child("price").getValue().toString()
                         holder.price.text = "€ $price"
 
@@ -88,7 +92,11 @@ class RecyclerViewAdapterSaved(var count:Int) :
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+                        Log.w(
+                            ContentValues.TAG,
+                            "loadPost:onCancelled",
+                            databaseError.toException()
+                        )
                     }
 
                 })
@@ -98,11 +106,6 @@ class RecyclerViewAdapterSaved(var count:Int) :
                 Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
             }
         })
-
-
-
-
-
 
 
     }

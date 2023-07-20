@@ -12,7 +12,7 @@ import com.groupthree.blocklink.Market.Logic.RecyclerViewAdapterSaved
 import com.groupthree.blocklink.R
 import com.groupthree.blocklink.databinding.SavedFragmentBinding
 
-class SavedFragment: Fragment(R.layout.saved_fragment) {
+class SavedFragment : Fragment(R.layout.saved_fragment) {
     private lateinit var database: FirebaseDatabase
     private lateinit var recyclerViewSaved: RecyclerView
     private lateinit var databaseReferenceItems: DatabaseReference
@@ -23,11 +23,16 @@ class SavedFragment: Fragment(R.layout.saved_fragment) {
     private val binding get() = _binding!!
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = SavedFragmentBinding.inflate(inflater, container, false)
 
-        database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
+        database =
+            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReferenceItems = database.getReference("items")
 
         //TODO: replace with actual current user
@@ -53,7 +58,7 @@ class SavedFragment: Fragment(R.layout.saved_fragment) {
 
 
 
-        binding.backSaved.setOnClickListener{
+        binding.backSaved.setOnClickListener {
             val marketFragment = MarketFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, marketFragment)
@@ -61,7 +66,7 @@ class SavedFragment: Fragment(R.layout.saved_fragment) {
             fragmentTransaction.commit()
         }
 
-        binding.clearSaved.setOnClickListener{
+        binding.clearSaved.setOnClickListener {
             databaseReferenceUsers.child("savedItems").removeValue()
         }
 

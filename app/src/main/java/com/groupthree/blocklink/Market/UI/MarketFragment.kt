@@ -28,7 +28,11 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
     var count: Int = 0
 
     @SuppressLint("MissingInflatedId")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = MarketFragmentBinding.inflate(inflater, container, false)
 
@@ -36,7 +40,8 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        database = FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
+        database =
+            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReferenceItems = database.getReference("items")
         addItems()
 
@@ -44,7 +49,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 count = dataSnapshot.childrenCount.toInt()
-                adapter = RecyclerViewAdapterMarket(databaseReferenceItems,count)
+                adapter = RecyclerViewAdapterMarket(databaseReferenceItems, count)
                 recyclerView.adapter = adapter
             }
 
@@ -55,7 +60,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
 
         databaseReferenceItems.addValueEventListener(valueEventListener)
 
-        binding.additem.setOnClickListener{
+        binding.additem.setOnClickListener {
             val newitemFragment = NewItemFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, newitemFragment)
@@ -63,7 +68,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             fragmentTransaction.commit()
         }
 
-        binding.saved.setOnClickListener{
+        binding.saved.setOnClickListener {
             val savedFragment = SavedFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, savedFragment)
@@ -72,20 +77,22 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         }
 
 
-        gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onDoubleTap(e: MotionEvent): Boolean {
-                val childView = binding.recyclerView.findChildViewUnder(e.x, e.y)
-                val position = childView?.let { binding.recyclerView.getChildAdapterPosition(it) }
-                if (position != RecyclerView.NO_POSITION) {
-                val detailsFragment = ItemDetailsFragment(position)
-                val fragmentTransaction = requireFragmentManager().beginTransaction()
-                fragmentTransaction.replace(R.id.frame_layout, detailsFragment)
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
+        gestureDetector =
+            GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    val childView = binding.recyclerView.findChildViewUnder(e.x, e.y)
+                    val position =
+                        childView?.let { binding.recyclerView.getChildAdapterPosition(it) }
+                    if (position != RecyclerView.NO_POSITION) {
+                        val detailsFragment = ItemDetailsFragment(position)
+                        val fragmentTransaction = requireFragmentManager().beginTransaction()
+                        fragmentTransaction.replace(R.id.frame_layout, detailsFragment)
+                        fragmentTransaction.addToBackStack(null)
+                        fragmentTransaction.commit()
+                    }
+                    return true
                 }
-                return true
-            }
-        })
+            })
 
         binding.recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
@@ -120,7 +127,12 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
             "cathrinsc"
         )
         databaseReferenceItems.child("i01").setValue(item)
-        item = MarketItem("iPhone X", "Farbe: schwarz\nSpeicher: 128GB\nZustand: gebraucht", 650.00,"cathrinsc")
+        item = MarketItem(
+            "iPhone X",
+            "Farbe: schwarz\nSpeicher: 128GB\nZustand: gebraucht",
+            650.00,
+            "cathrinsc"
+        )
         databaseReferenceItems.child("i02").setValue(item)
         item = MarketItem(
             "Pullover",

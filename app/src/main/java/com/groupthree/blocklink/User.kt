@@ -1,5 +1,5 @@
 package com.groupthree.blocklink
 
 data class User(
-       var savedItems:ArrayList<String> = ArrayList()
+    var savedItems: ArrayList<String> = ArrayList()
 )

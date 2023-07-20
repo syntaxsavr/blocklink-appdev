@@ -19,41 +19,52 @@ import com.groupthree.blocklink.R
 import com.groupthree.blocklink.databinding.NewitemFragmentBinding
 import java.util.*
 
-class NewItemFragment: Fragment(R.layout.newitem_fragment) {
+class NewItemFragment : Fragment(R.layout.newitem_fragment) {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
     private var _binding: NewitemFragmentBinding? = null
     private val binding get() = _binding!!
     private val PICK_IMAGE_REQUEST = 1
-    private val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
+    private val storage = Firebase.storage("gs://group3-appdev-2023.appspot.com")
     private val storageReference = storage.reference
-    private var selectedImageUri:Uri? = null
+    private var selectedImageUri: Uri? = null
 
     @SuppressLint("MissingInflatedId")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = NewitemFragmentBinding.inflate(inflater, container, false)
 
 
-        database =FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
+        database =
+            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReference = database.getReference("items")
 
 
         binding.add.setOnClickListener() {
-            if(binding.nameText.text.isNullOrBlank() || binding.descriptionText.text.isNullOrBlank()|| binding.priceText.text.isNullOrBlank()){
-                val toast = Toast.makeText(requireContext(), "Please enter Name, Description and Price.", Toast.LENGTH_LONG)
+            if (binding.nameText.text.isNullOrBlank() || binding.descriptionText.text.isNullOrBlank() || binding.priceText.text.isNullOrBlank()) {
+                val toast = Toast.makeText(
+                    requireContext(),
+                    "Please enter Name, Description and Price.",
+                    Toast.LENGTH_LONG
+                )
                 toast.show()
 
-            }
-            else{
+            } else {
                 var priceDouble = 0.00
                 val priceString = binding.priceText.text.toString()
-                if (!isDoubleFormat(priceString)){
-                    val toast = Toast.makeText(requireContext(), "Please enter price in following format: \"xxx.xx\".", Toast.LENGTH_LONG)
+                if (!isDoubleFormat(priceString)) {
+                    val toast = Toast.makeText(
+                        requireContext(),
+                        "Please enter price in following format: \"xxx.xx\".",
+                        Toast.LENGTH_LONG
+                    )
                     toast.show()
-                    }
-                else {
+                } else {
                     priceDouble = priceString.toDouble()
 
                     //TODO: replace empty string with current user
@@ -82,7 +93,6 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
                     })
 
 
-
                     val marketFragment = MarketFragment()
                     val fragmentTransaction = requireFragmentManager().beginTransaction()
                     fragmentTransaction.replace(R.id.frame_layout, marketFragment)
@@ -92,7 +102,7 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
             }
         }
 
-        binding.cancel.setOnClickListener{
+        binding.cancel.setOnClickListener {
             val marketFragment = MarketFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
             fragmentTransaction.replace(R.id.frame_layout, marketFragment)
@@ -100,7 +110,7 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
             fragmentTransaction.commit()
         }
 
-        binding.uploadImage.setOnClickListener{
+        binding.uploadImage.setOnClickListener {
             openGallery()
         }
         return binding.root
@@ -110,7 +120,7 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-           selectedImageUri = data.data
+            selectedImageUri = data.data
             binding.imagePreview.setImageURI(selectedImageUri)
         }
     }
@@ -128,7 +138,6 @@ class NewItemFragment: Fragment(R.layout.newitem_fragment) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
-
 
 
 }

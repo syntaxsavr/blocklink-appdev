@@ -16,7 +16,7 @@ import com.groupthree.blocklink.R
 import com.bumptech.glide.Glide
 
 
-class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var count:Int) :
+class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var count: Int) :
     RecyclerView.Adapter<RecyclerViewAdapterMarket.ViewHolder>() {
 
     private lateinit var context: Context
@@ -27,8 +27,8 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        var image:ImageView
-        var name:TextView
+        var image: ImageView
+        var name: TextView
         var description: TextView
         var price: TextView
 
@@ -53,14 +53,14 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        val storage= Firebase.storage("gs://group3-appdev-2023.appspot.com")
+        val storage = Firebase.storage("gs://group3-appdev-2023.appspot.com")
         val storageReference = storage.reference
 
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                var priceString=""
+                var priceString = ""
 
                 if (viewHolder.adapterPosition < 10) {
                     viewHolder.name.text =
@@ -77,8 +77,7 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
                         .child("price").getValue().toString()
 
 
-                }
-                else{
+                } else {
                     viewHolder.name.text =
                         dataSnapshot.child("i${viewHolder.adapterPosition}")
                             .child("name").getValue().toString()
@@ -93,21 +92,21 @@ class RecyclerViewAdapterMarket(var databaseReference: DatabaseReference, var co
                 }
 
                 val regex1 = "^[0-9]*.([0-9][0-9]?)?"
-                if(priceString.matches(regex1.toRegex())){
+                if (priceString.matches(regex1.toRegex())) {
                     viewHolder.price.text = "€ $priceString"
                 }
 
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         })
 
         var pathString = ""
-        if(viewHolder.absoluteAdapterPosition < 10){
+        if (viewHolder.absoluteAdapterPosition < 10) {
             pathString = "i0${viewHolder.adapterPosition}.png"
-        }
-        else{
+        } else {
             pathString = "i${viewHolder.adapterPosition}.png"
         }
 
