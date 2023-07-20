@@ -63,6 +63,10 @@ class SavedFragment: Fragment(R.layout.saved_fragment) {
             fragmentTransaction.commit()
         }
 
+        binding.clearSaved.setOnClickListener{
+            databaseReferenceUsers.child("savedItems").removeValue()
+        }
+
         return binding.root
     }
 }

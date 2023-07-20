@@ -27,11 +27,18 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/back_saved"
-            android:layout_width="420dp"
+
+            android:id="@+id/clearSaved"
+            android:layout_width="213dp"
+            android:layout_height="63dp"
+            android:text="clear" />
+
+        <Button
+
+            android:id="@+id/backSaved"
+            android:layout_width="213dp"
             android:layout_height="63dp"
             android:text="back" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
