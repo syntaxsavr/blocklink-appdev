@@ -20,7 +20,6 @@ import com.groupthree.blocklink.Utils.User
  */
 class MainActivity : AppCompatActivity() {
     private lateinit var alertDialog: AlertDialog
-    val userLocation = user.location
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    /**
+     * Loads an AlertDialog that asks the user if they want to logout
+     */
     fun logout(view: View) {
         // Create an AlertDialog.Builder object
         val builder = AlertDialog.Builder(this)
@@ -87,15 +89,5 @@ class MainActivity : AppCompatActivity() {
         // Show the dialog
         alertDialog = builder.create()
         alertDialog.show()
-    }
-
-    private fun getEventsForUser(user: User): List<Event> {
-        // Get the user's location.
-        val userLocation = user.location
-
-        // Get all events from the database.
-        val events = FirebaseDatabase.getInstance().getReference("events").get().getResult() as List<Event>
-
-        return events
     }
 }
