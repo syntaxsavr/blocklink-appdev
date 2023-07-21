@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.groupthree.blocklink.Events.Utils.Event
 import com.groupthree.blocklink.R
@@ -122,12 +123,28 @@ class EventsFragment : Fragment() {
             // Set event details to the views
             textViewName.text = event.name
             textViewDescription.text = event.description
-            textViewUsername.text = event.username
+            if (!event.username.isEmpty()) {
+                textViewUsername.text = event.username
+            } else {
+                textViewUsername.text = extractUsernameFromEmail(FirebaseAuth.getInstance().currentUser!!.email.toString())
+            }
+
 
             // Add the inflated view (eventView) to the container
             container.addView(eventView)
         }
     }
+    fun extractUsernameFromEmail(email: String): String {
+        val atIndex = email.indexOf("@")
+        return if (atIndex != -1) {
+            email.substring(0, atIndex)
+        } else {
+            // Handle the case when "@" is not found in the email (invalid email format)
+            // In this case, you can return the entire email or an empty string, depending on your requirements.
+            email
+        }
+    }
+
 
 
 }
