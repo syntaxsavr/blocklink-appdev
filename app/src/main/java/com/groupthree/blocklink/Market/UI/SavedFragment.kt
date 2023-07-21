@@ -61,7 +61,7 @@ class SavedFragment : Fragment(R.layout.saved_fragment) {
         binding.backSaved.setOnClickListener {
             val marketFragment = MarketFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, marketFragment)
+            fragmentTransaction.replace(R.id.fragmentContainer, marketFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }

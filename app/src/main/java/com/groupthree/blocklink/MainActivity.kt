@@ -12,11 +12,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
-import com.groupthree.blocklink.Utils.Event
-import com.groupthree.blocklink.Utils.User
 import com.google.firebase.database.*
+import com.groupthree.blocklink.Login.LoginActivity
 import com.groupthree.blocklink.Market.UI.MarketFragment
-import com.groupthree.blocklink.databinding.ActivityMainBinding
 
 /**
  * This class is the main activity of the app. It is the first screen that the user sees when they open the app.
@@ -24,13 +22,17 @@ import com.groupthree.blocklink.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var alertDialog: AlertDialog
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding: ActivityMainBinding
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReferenceItems: DatabaseReference
     private lateinit var databaseReferenceUsers: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        database =
+            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
+        databaseReferenceItems = database.getReference("items")
+        databaseReferenceUsers = database.getReference("users")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -64,6 +66,16 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
+    fun loadFragmentMarket(view: View) {
+        // initialize fragment manager and transaction
+        val fragmentManager: FragmentManager = supportFragmentManager
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        val marketFragment = MarketFragment()
+
+        // replace the fragment_container with the fragment on click
+        fragmentTransaction.replace(R.id.fragmentContainer, marketFragment)
+        fragmentTransaction.commit()
+    }
     /**
      * Loads an AlertDialog that asks the user if they want to logout
      */
@@ -99,20 +111,5 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-
-        database =
-            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
-        databaseReferenceItems = database.getReference("items")
-        databaseReferenceUsers = database.getReference("users")
-
-
-        //open market fragment
-        val marketFragment = MarketFragment()
-        fragmentTransaction.add(R.id.frame_layout, marketFragment)
-        fragmentTransaction.commit()
-        //
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
-    }
+            }
 }

@@ -95,7 +95,7 @@ class NewItemFragment : Fragment(R.layout.newitem_fragment) {
 
                     val marketFragment = MarketFragment()
                     val fragmentTransaction = requireFragmentManager().beginTransaction()
-                    fragmentTransaction.replace(R.id.frame_layout, marketFragment)
+                    fragmentTransaction.replace(R.id.fragmentContainer, marketFragment)
                     fragmentTransaction.addToBackStack(null)
                     fragmentTransaction.commit()
                 }
@@ -105,7 +105,7 @@ class NewItemFragment : Fragment(R.layout.newitem_fragment) {
         binding.cancel.setOnClickListener {
             val marketFragment = MarketFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, marketFragment)
+            fragmentTransaction.replace(R.id.fragmentContainer, marketFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }

@@ -1,4 +1,4 @@
-package com.groupthree.blocklink
+package com.groupthree.blocklink.Login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.groupthree.blocklink.MainActivity
+import com.groupthree.blocklink.R
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
