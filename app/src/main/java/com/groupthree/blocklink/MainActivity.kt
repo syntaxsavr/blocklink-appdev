@@ -14,6 +14,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.groupthree.blocklink.Utils.Event
 import com.groupthree.blocklink.Utils.User
+import com.google.firebase.database.*
+import com.groupthree.blocklink.Market.UI.MarketFragment
+import com.groupthree.blocklink.databinding.ActivityMainBinding
 
 /**
  * This class is the main activity of the app. It is the first screen that the user sees when they open the app.
@@ -21,6 +24,11 @@ import com.groupthree.blocklink.Utils.User
 class MainActivity : AppCompatActivity() {
     private lateinit var alertDialog: AlertDialog
     private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var database: FirebaseDatabase
+    private lateinit var databaseReferenceItems: DatabaseReference
+    private lateinit var databaseReferenceUsers: DatabaseReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,5 +97,22 @@ class MainActivity : AppCompatActivity() {
         // Show the dialog
         alertDialog = builder.create()
         alertDialog.show()
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        database =
+            FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
+        databaseReferenceItems = database.getReference("items")
+        databaseReferenceUsers = database.getReference("users")
+
+
+        //open market fragment
+        val marketFragment = MarketFragment()
+        fragmentTransaction.add(R.id.frame_layout, marketFragment)
+        fragmentTransaction.commit()
+        //
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
     }
 }
