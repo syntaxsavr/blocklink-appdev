@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 /**
  * This class is the main activity of the app. It is the first screen that the user sees when they open the app.
@@ -26,13 +28,15 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
 
         // Get the firebase auth instance
-        auth = FirebaseAuth.getInstance()
+        auth = Firebase.auth
 
         // Check if the user is logged in
         if (auth.currentUser == null) {
             // The user is not logged in, so open the login activity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
+
         }
     }
 
@@ -64,6 +68,11 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton("Yes") { _, _ ->
             // Logout the user
             //TODO: Implement logout functionality
+            auth.signOut()
+            Intent (this, LoginActivity::class.java).also {
+                startActivity(it)
+            }
+            finish()
             alertDialog.dismiss()
         }
 

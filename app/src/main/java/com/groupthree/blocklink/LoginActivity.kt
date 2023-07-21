@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
                         // The user is logged in
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     } else {
                         // The login failed
                         Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
