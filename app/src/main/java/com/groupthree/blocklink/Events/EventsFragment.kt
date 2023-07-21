@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -113,9 +114,20 @@ class EventsFragment : Fragment() {
             // Inflate the event layout
             val eventView = layoutInflater.inflate(R.layout.fragment_event, container, false)
 
-            // Add the event view to the linear layout
+            // Find views inside the inflated layout
+            val textViewName = eventView.findViewById<TextView>(R.id.txteventName)
+            val textViewDescription = eventView.findViewById<TextView>(R.id.txtDescription)
+            val textViewUsername = eventView.findViewById<TextView>(R.id.txtUsername)
+
+            // Set event details to the views
+            textViewName.text = event.name
+            textViewDescription.text = event.description
+            textViewUsername.text = event.username
+
+            // Add the inflated view (eventView) to the container
             container.addView(eventView)
         }
     }
+
 
 }

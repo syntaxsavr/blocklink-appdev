@@ -19,8 +19,21 @@ import com.groupthree.blocklink.databinding.FragmentEventsBinding
  */
 class EventFragment : Fragment() {
     lateinit var binding: FragmentEventBinding
+    private var name: String? = null
+    private var description: String? = null
+    private var username: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Get the name, description, and username from the arguments
+        name = arguments?.getString("name")
+        description = arguments?.getString("description")
+        username = arguments?.getString("username")
+
+        // Set the text of the views
+        binding.txteventName.text = name
+        binding.txtDescription.text = description
+        binding.txtUsername.text = username
     }
 
     override fun onCreateView(
@@ -29,26 +42,41 @@ class EventFragment : Fragment() {
     ): View? {
         binding = FragmentEventBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        val description = binding.txtDescription
+        val btnmaps = binding.btnOpenInMaps
+        val btnExpand = binding.btnExpand
 
+        // Set the OnClickListener for btnExpand
+        btnExpand.setOnClickListener {
+            // Handle the logic for expanding/collapsing txtDescription here
+            if (binding.txtDescription.visibility == View.GONE) {
+                binding.txtDescription.visibility = View.VISIBLE
+            } else {
+                binding.txtDescription.visibility = View.GONE
+            }
+        }
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    /**
+     * The companion object for the EventFragment class
+     */
+    companion object {
 
-        val description = binding.txtDescription
-        val btnmaps = binding.btnOpenInMaps
+        // The method to create a new instance of the EventFragment class
+        fun newInstance(name: String, description: String, username: String): EventFragment {
+            val fragment = EventFragment()
 
-        binding.btnExpand.setOnClickListener {
-            if (description.visibility == View.GONE) {
-                Log.d("TAG", "Setting visibility to VISIBLE")
-                description.visibility = View.VISIBLE
-                btnmaps.visibility = View.VISIBLE
-            } else {
-                Log.d("TAG", "Setting visibility to GONE")
-                description.visibility = View.GONE
-                btnmaps.visibility = View.GONE
-            }
+            // Bundle the arguments
+            val bundle = Bundle()
+            bundle.putString("name", name)
+            bundle.putString("description", description)
+            bundle.putString("username", username)
+
+            // Set the arguments for the fragment
+            fragment.arguments = bundle
+
+            return fragment
         }
     }
 
