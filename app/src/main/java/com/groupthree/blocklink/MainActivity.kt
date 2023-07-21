@@ -13,6 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.*
+import com.groupthree.blocklink.Events.EventsFragment
 import com.groupthree.blocklink.Login.LoginActivity
 import com.groupthree.blocklink.Market.UI.MarketFragment
 

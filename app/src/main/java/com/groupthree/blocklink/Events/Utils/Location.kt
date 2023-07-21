@@ -1,4 +1,4 @@
-package com.groupthree.blocklink.Utils
+package com.groupthree.blocklink.Events.Utils
 
 class Location {
 

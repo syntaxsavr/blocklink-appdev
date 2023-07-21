@@ -1,18 +1,19 @@
-package com.groupthree.blocklink
+package com.groupthree.blocklink.Events
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.groupthree.blocklink.Utils.Event
-import com.groupthree.blocklink.Utils.Location
+import com.groupthree.blocklink.Events.Utils.Event
+import com.groupthree.blocklink.Events.Utils.Location
+import com.groupthree.blocklink.R
 import com.groupthree.blocklink.databinding.FragmentCreateEventBinding
-import com.groupthree.blocklink.databinding.FragmentEventsBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -31,7 +32,7 @@ class CreateEventFragment : Fragment() {
         super.onCreate(savedInstanceState)
         database =
             FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
-        databaseReference = database.getReference("events")
+        databaseReference = database.getReference("/")
 
     }
 
@@ -48,7 +49,20 @@ class CreateEventFragment : Fragment() {
             fragmentTransaction.commit()
         }
         binding.btnCreateEventPost.setOnClickListener{
-            databaseReference.setValue(Event("Hubi", Location(0.0,0.0), "hallo"))
+            if (binding.editTextEventName.text.toString().isEmpty()) {
+                binding.editTextEventName.error = "Please enter a name"
+                binding.editTextEventName.requestFocus()
+                return@setOnClickListener
+            }else if (binding.editTextTextMultiLine2.text.toString().isEmpty()) {
+                binding.editTextTextMultiLine2.error = "Please enter a description"
+                binding.editTextTextMultiLine2.requestFocus()
+                return@setOnClickListener
+            }
+            val key1 = databaseReference.child("events").push().key
+
+            if (key1 != null) {
+                databaseReference.child("events").child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(0.0,0.0), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
+            }
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragmentContainer, EventsFragment())

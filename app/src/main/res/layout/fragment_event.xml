@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#23009688"
     android:orientation="vertical"
-    tools:context=".EventFragment">
+    tools:context=".Events.EventFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,12 +40,11 @@
             android:textColor="#AF9090"
             android:textStyle="italic" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btnExpand"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:onClick="expandFragment"
             android:src="@android:drawable/ic_menu_more" />
     </LinearLayout>
 
@@ -57,13 +56,11 @@
         android:text="Description"
         android:textAlignment="textStart"
         android:textColor="#000000"
-        android:textSize="16sp"
-        tools:visibility="gone" />
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnOpenInMaps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Maps"
-        tools:visibility="gone" />
+        android:text="Maps" />
 </LinearLayout>
