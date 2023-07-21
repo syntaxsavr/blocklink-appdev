@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/teal_700"
-            android:onClick="loadFramentChat"
+            android:onClick="loadFragmentEvents"
             android:text="Events" />
 
         <Button
