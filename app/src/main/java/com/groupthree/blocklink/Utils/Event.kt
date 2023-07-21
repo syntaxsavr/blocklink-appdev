@@ -4,11 +4,11 @@ class Event {
 
     var name: String = ""
     var location: Location = Location()
-    var radius: Double = 0.0
+    var description = ""
 
-    constructor(name: String, location: Location, radius: Double) {
+    constructor(name: String, location: Location, radius: String) {
         this.name = name
         this.location = location
-        this.radius = radius
+        this.description = radius
     }
 }

@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReferenceItems: DatabaseReference
     private lateinit var databaseReferenceUsers: DatabaseReference
+    // initialize fragment manager and transaction
+    val fragmentManager: FragmentManager = supportFragmentManager
+    val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,26 +59,22 @@ class MainActivity : AppCompatActivity() {
      * Loads the fragment_chat.xml layout into the fragmentContainer
      */
     fun loadFragmentEvents(view: View) {
-        // initialize fragment manager and transaction
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        val eventsFragment = EventsFragment()
-
-        // replace the fragment_container with the fragment on click
-        fragmentTransaction.replace(R.id.fragmentContainer, eventsFragment)
-        fragmentTransaction.commit()
+        var eventsfragment: EventsFragment = EventsFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, eventsfragment)
+            .commit()
     }
 
     fun loadFragmentMarket(view: View) {
-        // initialize fragment manager and transaction
-        val fragmentManager: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        val marketFragment = MarketFragment()
-
-        // replace the fragment_container with the fragment on click
-        fragmentTransaction.replace(R.id.fragmentContainer, marketFragment)
-        fragmentTransaction.commit()
+        var marketFragment: MarketFragment = MarketFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, marketFragment)
+            .commit()
     }
+
+
     /**
      * Loads an AlertDialog that asks the user if they want to logout
      */
