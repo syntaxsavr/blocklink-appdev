@@ -1,10 +1,13 @@
 package com.groupthree.blocklink.Events
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -119,6 +122,8 @@ class EventsFragment : Fragment() {
             val textViewName = eventView.findViewById<TextView>(R.id.txteventName)
             val textViewDescription = eventView.findViewById<TextView>(R.id.txtDescription)
             val textViewUsername = eventView.findViewById<TextView>(R.id.txtUsername)
+            val buttonOpenInMaps = eventView.findViewById<Button>(R.id.btnOpenInMaps)
+            val buttonExpand = eventView.findViewById<Button>(R.id.btnExpand)
 
             // Set event details to the views
             textViewName.text = event.name
@@ -128,10 +133,23 @@ class EventsFragment : Fragment() {
             } else {
                 textViewUsername.text = extractUsernameFromEmail(FirebaseAuth.getInstance().currentUser!!.email.toString())
             }
+            textViewDescription.visibility = View.GONE
+            buttonOpenInMaps.visibility = View.GONE
 
+            buttonOpenInMaps.setOnClickListener{
+                if (buttonOpenInMaps.visibility == View.VISIBLE){
+                    buttonOpenInMaps.visibility = View.GONE
+                    textViewDescription.visibility = View.GONE
+                }else{
+                    buttonOpenInMaps.visibility = View.VISIBLE
+                    textViewDescription.visibility = View.VISIBLE
+                }
+            }
+            val framecontainer = FrameLayout(requireContext())
+            framecontainer.addView(eventView)
 
             // Add the inflated view (eventView) to the container
-            container.addView(eventView)
+            container.addView(framecontainer)
         }
     }
     fun extractUsernameFromEmail(email: String): String {
