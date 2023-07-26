@@ -68,8 +68,9 @@
         android:id="@+id/btnOpenInMaps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:fontFamily="@font/source_code_pro_medium"
-        android:text="Maps"
+        android:text="See Location"
         android:textColor="#000000"
         android:textSize="20sp" />
 </LinearLayout>

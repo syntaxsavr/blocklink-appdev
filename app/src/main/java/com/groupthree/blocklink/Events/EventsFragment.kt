@@ -1,5 +1,6 @@
 package com.groupthree.blocklink.Events
 
+import GPSTracker
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
@@ -40,6 +41,8 @@ class EventsFragment : Fragment() {
     // The binding for the fragment
     private lateinit var binding: FragmentEventsBinding
 
+    // Location Finder Class
+    private lateinit var locfind: GPSTracker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,6 +52,9 @@ class EventsFragment : Fragment() {
 
         // Initialize the Firebase database reference
         databaseReference = database.getReference("/")
+
+        // Initialize GPS Tracker
+        locfind = GPSTracker(requireContext(), requireActivity())
     }
 
     override fun onCreateView(
@@ -112,9 +118,10 @@ class EventsFragment : Fragment() {
 
         // Add the linear layout to the scroll view
         scrollView.addView(container)
+        val reversedevents = events.reversed()
 
         // Iterate through the events
-        for (event in events) {
+        for (event in reversedevents) {
             // Inflate the event layout
             val eventView = layoutInflater.inflate(R.layout.fragment_event, container, false)
 
@@ -136,13 +143,17 @@ class EventsFragment : Fragment() {
             textViewDescription.visibility = View.GONE
             buttonOpenInMaps.visibility = View.GONE
 
-            buttonOpenInMaps.setOnClickListener{
+            buttonExpand.setOnClickListener{
                 if (buttonOpenInMaps.visibility == View.VISIBLE){
                     buttonOpenInMaps.visibility = View.GONE
                     textViewDescription.visibility = View.GONE
+                    buttonExpand.text = "+"
                 }else{
-                    buttonOpenInMaps.visibility = View.VISIBLE
                     textViewDescription.visibility = View.VISIBLE
+                    buttonExpand.text = "-"
+
+                    if (event.location.latitude != 0.0 && event.location.longitude != 0.0)
+                        buttonOpenInMaps.visibility = View.VISIBLE
                 }
             }
             val framecontainer = FrameLayout(requireContext())
@@ -151,6 +162,11 @@ class EventsFragment : Fragment() {
             // Add the inflated view (eventView) to the container
             container.addView(framecontainer)
         }
+        if (locfind.isGPSEnabled && locfind.isGPSTrackingEnabled)
+            binding.textViewLocation.text = locfind.getLocality(view?.context).toString()
+        else
+            binding.textViewLocation.text = "Could not fetch location"
+
     }
     fun extractUsernameFromEmail(email: String): String {
         val atIndex = email.indexOf("@")

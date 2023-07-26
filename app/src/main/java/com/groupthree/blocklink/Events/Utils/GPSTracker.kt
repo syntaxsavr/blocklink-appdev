@@ -1,5 +1,6 @@
 import android.Manifest
 import android.R
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Service
 import android.content.Context
@@ -15,14 +16,7 @@ import androidx.core.app.ActivityCompat
 import java.io.IOException
 import java.util.*
 
-/**
- * Create this Class from tutorial :
- * http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial
- *
- * For Geocoder read this : http://stackoverflow.com/questions/472313/android-reverse-geocoding-getfromlocation
- *
- */
-class GPSTracker(private val mContext: Context) : Service(),
+class GPSTracker(private val mContext: Context, private val mAct: Activity) : Service(),
     LocationListener {
     // flag for GPS Status
     var isGPSEnabled = false
@@ -89,16 +83,31 @@ class GPSTracker(private val mContext: Context) : Service(),
 
             // Application can use GPS or Network Provider
             if (!provider_info!!.isEmpty()) {
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    Log.d(TAG, "Permissions not enabled!")
-                    return
+
+                // Check if we have the permissions
+
+                // Check if we have the permissions
+                val permissionFineLocation = ActivityCompat.checkSelfPermission(
+                    mContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                val permissionCoarseLocation = ActivityCompat.checkSelfPermission(
+                    mContext,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+
+// If we don't have the permissions, request them
+
+// If we don't have the permissions, request them
+                if (permissionFineLocation != PackageManager.PERMISSION_GRANTED || permissionCoarseLocation != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                        mAct,
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ),
+                        100
+                    )
                 }
                 locationManager!!.requestLocationUpdates(
                     provider_info!!,
