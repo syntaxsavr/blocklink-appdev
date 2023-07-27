@@ -63,7 +63,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         binding.additem.setOnClickListener {
             val newitemFragment = NewItemFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, newitemFragment)
+            fragmentTransaction.replace(R.id.fragmentContainer, newitemFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
@@ -71,7 +71,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
         binding.saved.setOnClickListener {
             val savedFragment = SavedFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, savedFragment)
+            fragmentTransaction.replace(R.id.fragmentContainer, savedFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
@@ -86,7 +86,7 @@ class MarketFragment : Fragment(R.layout.market_fragment) {
                     if (position != RecyclerView.NO_POSITION) {
                         val detailsFragment = ItemDetailsFragment(position)
                         val fragmentTransaction = requireFragmentManager().beginTransaction()
-                        fragmentTransaction.replace(R.id.frame_layout, detailsFragment)
+                        fragmentTransaction.replace(R.id.fragmentContainer, detailsFragment)
                         fragmentTransaction.addToBackStack(null)
                         fragmentTransaction.commit()
                     }

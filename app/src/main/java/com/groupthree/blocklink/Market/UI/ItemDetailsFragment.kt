@@ -93,7 +93,7 @@ class ItemDetailsFragment(var position: Int?) : Fragment(R.layout.itemdetails_fr
         binding.backDetails.setOnClickListener {
             val marketFragment = MarketFragment()
             val fragmentTransaction = requireFragmentManager().beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, marketFragment)
+            fragmentTransaction.replace(R.id.fragmentContainer, marketFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
