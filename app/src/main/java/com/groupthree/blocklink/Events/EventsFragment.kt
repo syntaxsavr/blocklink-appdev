@@ -1,6 +1,7 @@
 package com.groupthree.blocklink.Events
 
 import GPSTracker
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -151,7 +152,7 @@ class EventsFragment : Fragment() {
             buttonOpenInMaps.visibility = View.GONE
 
             buttonExpand.setOnClickListener{
-                if (buttonOpenInMaps.visibility == View.VISIBLE){
+                if (textViewDescription.visibility == View.VISIBLE){
                     buttonOpenInMaps.visibility = View.GONE
                     textViewDescription.visibility = View.GONE
                     buttonExpand.text = "+"
@@ -162,7 +163,11 @@ class EventsFragment : Fragment() {
                     if (event.location.latitude != 0.0 && event.location.longitude != 0.0){
                         buttonOpenInMaps.visibility = View.VISIBLE
                         buttonOpenInMaps.setOnClickListener{
-                            openGoogleMaps(requireContext(), event.location.latitude, event.location.longitude)
+                            try {
+                                openGoogleMaps(requireContext(), event.location.latitude, event.location.longitude)
+                            }catch (e: Exception){
+                                AlertDialog.Builder(requireContext()).setTitle("App missing").setMessage("Google Maps might be missing on your device!").show()
+                            }
                         }
                     }
                 }

@@ -2,6 +2,7 @@ package com.groupthree.blocklink.Events
 
 import GPSTracker
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,7 @@ class CreateEventFragment : Fragment() {
 
                 // Check if username is set, if not set take email name as username
                 var dname = ""
+
                 if (FirebaseAuth.getInstance().currentUser?.displayName!!.isEmpty())
                     dname = extractUsernameFromEmail(FirebaseAuth.getInstance().currentUser?.email!!)
                 else
@@ -73,9 +75,9 @@ class CreateEventFragment : Fragment() {
 
                 // Save information into database
                 if(binding.switchShareLocation.isChecked)
-                    databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(locfind.getLongitudeRaw(), locfind.getLatitudeRaw()), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
+                    databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(locfind.getLongitudeRaw(), locfind.getLatitudeRaw()), binding.editTextTextMultiLine2.text.toString(), dname))
                 else
-                    databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(0.0, 0.0), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
+                    databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(0.0, 0.0), binding.editTextTextMultiLine2.text.toString(), dname))
             }
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
