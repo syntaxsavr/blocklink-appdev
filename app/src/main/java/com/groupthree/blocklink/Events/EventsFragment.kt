@@ -1,6 +1,9 @@
 package com.groupthree.blocklink.Events
 
 import GPSTracker
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
@@ -43,6 +46,9 @@ class EventsFragment : Fragment() {
 
     // Location Finder Class
     private lateinit var locfind: GPSTracker
+
+    // Zipcode
+    private lateinit var zipcode: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,6 +61,9 @@ class EventsFragment : Fragment() {
 
         // Initialize GPS Tracker
         locfind = GPSTracker(requireContext(), requireActivity())
+
+        zipcode = locfind.getPostalCode(requireContext()).toString()
+        if (zipcode.equals("null")) zipcode = "9020"
     }
 
     override fun onCreateView(
@@ -81,7 +90,7 @@ class EventsFragment : Fragment() {
         val events = mutableListOf<Event>()
 
         // Get the events from the database
-        databaseReference.child(locfind.getPostalCode(requireContext()).toString()).get().addOnSuccessListener { snapshot ->
+        databaseReference.child(zipcode).get().addOnSuccessListener { snapshot ->
             // If the snapshot exists
             if (snapshot.exists()) {
                 // Iterate through the children of the snapshot
@@ -150,8 +159,12 @@ class EventsFragment : Fragment() {
                     textViewDescription.visibility = View.VISIBLE
                     buttonExpand.text = "-"
 
-                    if (event.location.latitude != 0.0 && event.location.longitude != 0.0)
+                    if (event.location.latitude != 0.0 && event.location.longitude != 0.0){
                         buttonOpenInMaps.visibility = View.VISIBLE
+                        buttonOpenInMaps.setOnClickListener{
+                            openGoogleMaps(requireContext(), event.location.latitude, event.location.longitude)
+                        }
+                    }
                 }
             }
             val framecontainer = FrameLayout(requireContext())
@@ -167,6 +180,21 @@ class EventsFragment : Fragment() {
 
     }
 
+    /**
+     * Function that starts GMaps with a given location
+     */
+    fun openGoogleMaps(context: Context, latitude: Double, longitude: Double) {
+        // Create a Uri from the latitude and longitude
+        val gmmIntentUri = Uri.parse("geo:0,0?q=$latitude,$longitude")
 
+        // Create an Intent from the Uri
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+
+        // Set the package name to Google Maps
+        mapIntent.setPackage("com.google.android.apps.maps")
+
+        // Start the activity
+        context.startActivity(mapIntent)
+    }
 
 }
