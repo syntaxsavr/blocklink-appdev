@@ -72,7 +72,10 @@ class CreateEventFragment : Fragment() {
                     dname = FirebaseAuth.getInstance().currentUser?.displayName.toString()
 
                 // Save information into database
-                databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(locfind.getLongitudeRaw(), locfind.getLatitudeRaw()), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
+                if(binding.switchShareLocation.isChecked)
+                    databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(locfind.getLongitudeRaw(), locfind.getLatitudeRaw()), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
+                else
+                    databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(0.0, 0.0), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
             }
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
