@@ -1,5 +1,6 @@
 package com.groupthree.blocklink.Events
 
+import GPSTracker
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,13 +28,14 @@ class CreateEventFragment : Fragment() {
     private lateinit var binding: FragmentCreateEventBinding
     lateinit var database: FirebaseDatabase
     lateinit var databaseReference: DatabaseReference
-
+    lateinit var locfind: GPSTracker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         database =
             FirebaseDatabase.getInstance("https://group3-appdev-2023-default-rtdb.europe-west1.firebasedatabase.app/")
         databaseReference = database.getReference("/")
 
+        locfind = GPSTracker(requireContext(), requireActivity())
     }
 
     override fun onCreateView(
@@ -58,10 +60,19 @@ class CreateEventFragment : Fragment() {
                 binding.editTextTextMultiLine2.requestFocus()
                 return@setOnClickListener
             }
-            val key1 = databaseReference.child("events").push().key
+            val key1 = databaseReference.child(locfind.getPostalCode(requireContext()).toString()).push().key
 
             if (key1 != null) {
-                databaseReference.child("events").child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(0.0,0.0), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
+
+                // Check if username is set, if not set take email name as username
+                var dname = ""
+                if (FirebaseAuth.getInstance().currentUser?.displayName!!.isEmpty())
+                    dname = extractUsernameFromEmail(FirebaseAuth.getInstance().currentUser?.email!!)
+                else
+                    dname = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+
+                // Save information into database
+                databaseReference.child(locfind.getPostalCode(requireContext()).toString()).child(key1).setValue(Event(binding.editTextEventName.text.toString(), Location(locfind.getLongitudeRaw(), locfind.getLatitudeRaw()), binding.editTextTextMultiLine2.text.toString(), FirebaseAuth.getInstance().currentUser?.displayName.toString()))
             }
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
@@ -70,5 +81,19 @@ class CreateEventFragment : Fragment() {
             fragmentTransaction.commit()
         }
         return binding.root
+    }
+
+    /**
+     * Function to extract the username out of an email if not set spcifically
+     */
+    fun extractUsernameFromEmail(email: String): String {
+        val atIndex = email.indexOf("@")
+        return if (atIndex != -1) {
+            email.substring(0, atIndex)
+        } else {
+            // Handle the case when "@" is not found in the email (invalid email format)
+            // In this case, you can return the entire email or an empty string, depending on your requirements.
+            email
+        }
     }
 }

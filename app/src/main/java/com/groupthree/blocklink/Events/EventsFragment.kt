@@ -81,7 +81,7 @@ class EventsFragment : Fragment() {
         val events = mutableListOf<Event>()
 
         // Get the events from the database
-        databaseReference.child("events").get().addOnSuccessListener { snapshot ->
+        databaseReference.child(locfind.getPostalCode(requireContext()).toString()).get().addOnSuccessListener { snapshot ->
             // If the snapshot exists
             if (snapshot.exists()) {
                 // Iterate through the children of the snapshot
@@ -135,11 +135,9 @@ class EventsFragment : Fragment() {
             // Set event details to the views
             textViewName.text = event.name
             textViewDescription.text = event.description
-            if (!event.username.isEmpty()) {
-                textViewUsername.text = event.username
-            } else {
-                textViewUsername.text = extractUsernameFromEmail(FirebaseAuth.getInstance().currentUser!!.email.toString())
-            }
+
+            textViewUsername.text = event.username
+
             textViewDescription.visibility = View.GONE
             buttonOpenInMaps.visibility = View.GONE
 
@@ -167,16 +165,6 @@ class EventsFragment : Fragment() {
         else
             binding.textViewLocation.text = "Could not fetch location"
 
-    }
-    fun extractUsernameFromEmail(email: String): String {
-        val atIndex = email.indexOf("@")
-        return if (atIndex != -1) {
-            email.substring(0, atIndex)
-        } else {
-            // Handle the case when "@" is not found in the email (invalid email format)
-            // In this case, you can return the entire email or an empty string, depending on your requirements.
-            email
-        }
     }
 
 
